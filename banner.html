@@ -1,0 +1,98 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+//定义全局变量
+var $imgs;
+var $first;
+var current_img;
+var temp;
+current_img = 0;
+
+$(document).ready(function(){
+//获取所有的class为.images的图片对象，保存在$imgs这个jquery对象里 
+$imgs =  $(".images");
+//获取所有的class为.images中第一个图片对象，保存在$first这个jquery对象里 
+$first = $(".images:first");
+//初始化图片显示框为第一张图
+$("#show").attr("src", $first.attr("src"));
+//加入事件监听
+addEventListener();
+//循环运行swtichimgs函数（5000ms切换一次）
+setInterval(swtichimgs,5000);
+	
+});
+
+
+//切换图片（向后）
+function swtichimgs(){
+
+	if (current_img == ($imgs.length-1)){
+	 current_img = 0;
+	  
+	}
+	else{
+	current_img += 1
+	}
+	
+	temp = $imgs[current_img].src;
+	$("#show").attr("src", temp);
+
+}
+
+//切换图片（向前）
+function swtichimgs_p(){
+
+	if (current_img == 0){
+	 current_img = ($imgs.length-1);
+	  
+	}
+	else{
+	current_img -= 1
+	}
+	temp = $imgs[current_img].src;
+	$("#show").attr("src", temp);
+
+}
+	
+//切换图片（事件监听）
+function addEventListener(){
+
+    $(".prev").bind("click",function(){
+	swtichimgs_p();
+});
+
+	$(".next").bind("click",function(){
+	swtichimgs();
+});
+
+
+}
+
+
+
+</script>
+<style>
+.showbox{
+width:250px;
+height:135px;
+overflow:hidden;
+background-color:#000;
+}
+.images{display:none;}
+.prev,.next{cursor:pointer;}
+</style>
+</head>
+
+<body>
+<div class="showbox"><img src="#" id="show"></div>
+<div class="prev">前一张</div>
+
+<div class="next">后一张</div>
+<img src="images/1.jpg" class="images">
+<img src="images/2.jpg" class="images">
+<img src="images/3.jpg" class="images">
+</body>
+
+</html> 
